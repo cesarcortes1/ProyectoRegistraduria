@@ -1,0 +1,8 @@
+{
+"url-backend": "127.0.0.1",
+"port": 9999,
+
+
+"data-db-connection" : "mongodb+srv://cescortes06:C90a06c2109caC90@cluster0.lzu90yw.mongodb.net/BD_Resultado?retryWrites=true&w=majority",
+ "name-db": "BD_Resultado"
+ }
