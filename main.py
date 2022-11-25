@@ -30,12 +30,12 @@ def test():
 def getCandidatos():
     json=miControladorCandidato.index()
     return jsonify(json)
-@app.route("/candidato",methods=['POST'])
+@app.route("/candidatos",methods=['POST'])
 def crearCandidato():
     data = request.get_json()
     json=miControladorCandidato.create(data)
     return jsonify(json)
-@app.route("/candidato/<string:id>",methods=['GET'])
+@app.route("/candidatos/<string:id>",methods=['GET'])
 def getCandidato(id):
     json=miControladorCandidato.show(id)
     return jsonify(json)
@@ -48,6 +48,13 @@ def modificarCandidato(id):
 @app.route("/candidato/<string:id>",methods=['DELETE'])
 def eliminarCandidato(id):
     json=miControladorCandidato.delete(id)
+    return jsonify(json)
+"""
+    Asignar partido a un candidato
+"""
+@app.route("/candidato/<string:id>/partido/<string:id_partido>",methods=['PUT'])
+def asignarPartidoACandidato(id,id_partido):
+    json=miControladorCandidato.asignarPartido(id,id_partido)
     return jsonify(json)
 
 ######## rutas para Partidos######
@@ -99,7 +106,7 @@ def modificarMesa(id):
 
 @app.route("/mesas/<string:id>",methods=['DELETE'])
 def eliminarMesa(id):
-    json=miControladorPartido.delete(id)
+    json=miControladorMesa.delete(id)
     return jsonify(json)
 
 ######## rutas para Resultados######
@@ -108,19 +115,20 @@ def eliminarMesa(id):
 def getResultados():
     json=miControladorResultado.index()
     return jsonify(json)
-@app.route("/resultado",methods=['POST'])
-def crearResultado():
+
+@app.route("/resultado/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['POST'])
+def crearResultado(id_candidato,id_mesa):
     data = request.get_json()
-    json=miControladorResultado.create(data)
+    json=miControladorResultado.create(data,id_candidato, id_mesa)
     return jsonify(json)
 @app.route("/resultado/<string:id>",methods=['GET'])
 def getResultado(id):
     json=miControladorResultado.show(id)
     return jsonify(json)
-@app.route("/resultados/<string:id>",methods=['PUT'])
-def modificarResultados(id):
+@app.route("/resultados/<string:id_resultado>/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['PUT'])
+def modificarResultados(id_resultado,id_candidato,id_mesa):
     data = request.get_json()
-    json=miControladorResultado.update(id,data)
+    json=miControladorResultado.update(id_resultado,data,id_candidato,id_mesa)
     return jsonify(json)
 
 @app.route("/resultado/<string:id>",methods=['DELETE'])
